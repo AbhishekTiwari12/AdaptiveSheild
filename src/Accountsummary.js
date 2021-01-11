@@ -11,18 +11,26 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import {Auth} from "aws-amplify";
 
-
+// Sends the list of stocks to the add, delete and update screens.
+// Every Add, update or delete action is verified using this list
 var arr = []
 export function sendList(){
   var arr1 = arr
   return arr1
 }
+
+//Function to fetch data, perform calculation for account total and render the screen
+//along with the table and the graph
 export default function Accountsummary() {
+  //useHistory() hook is used to facilitate navigation between pages
   const history = useHistory();
   const handleClick = () => history.push("/ShieldSetup");
   const handleClick2 = () => history.push("/AddStocks");
   const handleClick3 = () => history.push("/DeleteScreen");
   const handleClick4 = () => history.push("/UpdateScreen");
+
+  //Theme for the table
+
   const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -35,9 +43,13 @@ export default function Accountsummary() {
     },
   }));
 
+  //Function to create data rows for the table 
+  //Takes in 6 values and returns a rows that is rendered as a table row 
   function createData(Symbol, Quantity, Last, Previous, Change, Value) {
     return { Symbol, Quantity, Last, Previous, Change, Value };
   }
+
+  //CSS for the elements on the page, will have no errors here, ignore in case of debugging.
   const headings = {
     marginTop: -30,
     fontSize: 30,
@@ -95,46 +107,66 @@ export default function Accountsummary() {
     maxWidth: 900,
   };
 
-  var rows2 = [];
-  const [rows, setRows] = React.useState([]);
+  var rows2 = []; // rows2 holds the initial stock data as returned by the API and sends it to setRows function. 
+  //Custom react hook to re-render the screen everytime portofolio data is returned by the API, the new data(passed by rows2) 
+  //is stored in the rows variable
+  const [rows, setRows] = React.useState([]); 
+
+  var sum = 0; //sum holds the initial value for "Balance", passes it on to setSum function.
+  //react hook to re-render the screen everytime the value of "Balance" changes, the new total(passed by sum) is stored in the rows
+  //variable
   const [sum1, setSum] = React.useState(0);
+
+  var prevTotal = 0; //Holds the total portfolio value for the previous trading day, passes it on to the setPrevtotal fucntion
+  //react hook to re-render the screen everytime new data is avaialable for prevoius day, the variable prevTotal1 is used to calculate gain/loss.
   const [prevTotal1, setPrevtotal] = React.useState(0);
-  const [user, setUser] = React.useState("");
-  var lyst = [];
-  var prevTotal = 0;
-  var sum = 0;
-  getUserData()
+  
+  const [user, setUser] = React.useState(""); //Has data of the current logged-in user
+
+  var lyst = []; //Has basic stock data before it is assigned to the rows2 variable
+
+  getUserData() //Calling the getUserData() function
+
+  //gets data for the current logged-in user from AWS api
   function loadUser(){
     return Auth.currentAuthenticatedUser({bypassCache: true});
   }
+
+  //function to store the user data in the user variable
   async function getUserData(){
     try{
+      //waiting for the loadUser() function to finish resolving, store the returned value in logged variable post resolve.
       const logged = await loadUser();
-      console.log(logged.username)
+      //passing it onto the setUser hook to be stored into the user variable.
       setUser(logged.username)
-    }catch(e){
+  
+    }catch(e){ //catching errors
       alert(e)
     }
   }
-  console.log(user)
   
+  //fucntion to get data for the portfolio-table and total balance.
   async function getData() {
+    //defining the requestOptions
     var requestOptions = {
       method: "POST",
       redirect: "follow",
     };
-
+    //creating the request, waiting for it to finish, storing the fetched value in the response variable
     const response = await fetch(
       "https://7yseqgoxea.execute-api.us-east-1.amazonaws.com/dev/fetch-customer-portfolio",
       requestOptions
     );
+    //Throw an error if API returns an error
     if (!response.ok) {
       const message = `An error has occured: ${response.status}`;
       throw new Error(message);
     }
-
+    //Storing the raw json data returned by the API
     const stockList_raw = await response.json();
+    //going 1 level down in the JSON response("clientPortfolio" is the head key for the response)
     const stockList = stockList_raw["clientPortfolio"];
+    //looping through the parsed stockList, pushing the stock data as a row in the lyst variable
     for (var i = 0; i < stockList.length; i++) {
       lyst.push([
         stockList[i]["Symbol"],
@@ -143,14 +175,18 @@ export default function Accountsummary() {
         stockList[i]["percentage_difference"],
         stockList[i]["yesterdays_close"],
       ]);
+      //Adding today's prices to the sum variable
       sum = sum + stockList[i]["Quantity"] * stockList[i]["todays_close"];
-      prevTotal =
-        prevTotal + stockList[i]["Quantity"] * stockList[i]["yesterdays_close"];
+      //Adding yesterday's prices to the prevTotal variable
+      prevTotal = prevTotal + stockList[i]["Quantity"] * stockList[i]["yesterdays_close"];
     }
+    //storing the total(final) values of the sum and prevTotal variables.
     setSum(sum);
     setPrevtotal(prevTotal);
-    arr = lyst
+    
+    arr = lyst //store the lyst data in the arr variable, to be used for checks in the add, update, delete screens.
 
+    //Looping through the list having stock data, pushing the rows into rows2 after modifications.
     for (i = 0; i < lyst.length; i++) {
       rows2.push(
         createData(
@@ -163,17 +199,21 @@ export default function Accountsummary() {
         )
       );
     }
+    //passing the data in rows2 to setRows function so that the screen re-renders if there is a change.
     setRows(rows2);
-    console.log(lyst);
   }
 
   const classes = useStyles();
-  console.log(sum1.toFixed(2));
-  console.log("Rows:", rows);
-  getData();
+  // console.log(sum1.toFixed(2));
+  // console.log("Rows:", rows);
+
+  getData(); //calling the getData() function
+
+  //Changing the colour of the G/L text to red if there is a loss 
   if ((sum1 - prevTotal1).toFixed(2) < 0) {
     Datast2["color"] = "#EA421F";
   }
+  // rendering the elements, will not have issues until messed with, ignore when debugging.
   return (
     <React.Fragment>
       <div style={headings}>
