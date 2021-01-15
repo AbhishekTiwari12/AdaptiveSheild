@@ -1,0 +1,102 @@
+.body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ecf0f1;
+    height: 5vh;
+  }
+  
+  #chck {
+    position: absolute;
+    opacity: 0;
+    z-index: -0;
+  }
+  
+  .toggle {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 11em;
+    height: 4em;
+    background-color: #bdd4e7;
+    background-image: linear-gradient(315deg, #8693ab 0%, #bdd4e7 74%);
+    border-radius: 6em;
+    transition: all 0.5s ease;
+    cursor: pointer;
+  }
+  
+  .toggle:after {
+    position: absolute;
+    content: "Adaptive Shield";
+    align-content: left;
+    justify-content: left;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: left;
+    color: #ffffff;
+    font-size: 1.1em;
+    height: 3.25em;
+    width: 3.25em;
+    transform: translate(15%);
+  }
+  
+  .toggle-handler {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -7em;
+    justify-content: center;
+    align-items: center;
+    width: 3.25em;
+    height: 3.25em;
+    background: #5e6a73;
+    border-radius: 75%;
+    transition: all 0.5s ease;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .toggle-handler::before {
+    content: "OFF";
+    color: #f9f9f9;
+    font-size: 1em;
+    font-weight: bold;
+  }
+  
+  .toggle:hover {
+    transform: scale(1.1);
+  }
+  
+  .toggle-handler:hover {
+    transform: scale(1.2);
+  }
+  
+  #chck:checked + .toggle {
+    background-color: #ffffff;
+    background-image: linear-gradient(315deg, #ffffff 0%, #82bc23 74%);
+  }
+  
+  #chck:checked + .toggle::after {
+    color: white;
+    transform: translate(-75%);
+  }
+  
+  #chck:checked + .toggle .toggle-handler {
+    content: "";
+    transform: translate(80px, 0);
+    width: 3.25em;
+    height: 3.25em;
+    margin-right: 3em;
+    margin-left: 0px;
+    background: #68961c;
+  }
+  
+  #chck:checked + .toggle .toggle-handler::before {
+    content: "ON";
+    font-size: 1em;
+    color: #f9f9f9;
+  }
+  

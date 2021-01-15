@@ -2,21 +2,56 @@ import React from "react";
 // import VerticalSlider from "./Slider";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import data2 from "./quotes.json";
 import Loader from "react-loader-spinner";
 
-// var requestOptions = {
-//   method: "POST",
-//   redirect: "follow",
-// };
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: 200 + theme.spacing(3) * 2,
+  },
+  margin: {
+    height: theme.spacing(3),
+  },
+}));
 
-//Defining global variables that will be passed on to next screen as stats 
+const SliderF = withStyles({
+  root: {
+    color: "#52af77",
+    height: 8,
+  },
+  thumb: {
+    height: 20,
+    width: 20,
+    backgroundColor: "#fff",
+    border: "2px solid currentColor",
+    marginTop: 0,
+    marginLeft: 0,
+    "&:focus, &:hover, &$active": {
+      boxShadow: "inherit",
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: "calc(-75% + 4px)",
+  },
+  track: {
+    height: 8,
+    borderRadius: 4,
+    width: "8px !important",
+  },
+  rail: {
+    height: 8,
+    width: "8px !important",
+    borderRadius: 4,
+  },
+})(Slider);
+//Defining global variables that will be passed on to next screen as stats
 var shieldP = 0;
 var shieldPeriod = "";
-var shieldPercentage = 0;
+var shieldPercentage = 0.15;
 
 //Function to send the shield price, percentage and protection period to other screens
 export function sendPrice() {
@@ -45,9 +80,8 @@ export default function ShieldSetup() {
   var [data, setData] = React.useState(data2);
   const [diyPer, setDiyPer] = React.useState(0);
 
-
-//function to handle selcted radio buttons
-// re-renders the screen whenever a new radio-button is selected
+  //function to handle selcted radio buttons
+  // re-renders the screen whenever a new radio-button is selected
   const handleChange = (event) => {
     setName(event.target.value);
   };
@@ -63,13 +97,7 @@ export default function ShieldSetup() {
   const handleChange4 = (value) => {
     setDiy(value);
   };
-  const useStyles = makeStyles({
-    root: {
-      height: 220,
-      width: 50,
-    },
-  });
-  //val variable to store the selected protection precent. 
+  //val variable to store the selected protection precent.
   var val = 0;
   //marks2 variable to store the percentages at which the slider has to stick
   var marks2 = [];
@@ -99,8 +127,8 @@ export default function ShieldSetup() {
       const data_local = await response.json();
       setData(data_local);
       // console.log("data:", data);
-  
-      setFlag(true);//setting the flag to true.
+
+      setFlag(true); //setting the flag to true.
     }
   }
   //function to get the selected the protection and level and fetch the price based on it.
@@ -117,12 +145,12 @@ export default function ShieldSetup() {
   //function to get the required price from the data.
   async function fetch_price(period = "Daily", percent = "3.00") {
     if (flag === true) {
-      //if selecetd period == day, getting prices for the day. 
+      //if selecetd period == day, getting prices for the day.
       if (period === "Daily") {
         var tp = data["day"];
         shieldPeriod = "1 Day"; //assigning value to shieldPeriod variable, will be sent to other screens.
 
-        //if selecetd period == day, getting prices for the day. 
+        //if selecetd period == day, getting prices for the day.
       } else if (period === "Day") {
         tp = data["day"];
         shieldPeriod = "1 Day"; //assigning value to shieldPeriod variable, will be sent to other screens.
@@ -137,7 +165,7 @@ export default function ShieldSetup() {
         tp = data["month"];
         shieldPeriod = "1 Month"; //assigning value to shieldPeriod variable, will be sent to other screens.
 
-        //if selected period == year, geting prices for the year. 
+        //if selected period == year, geting prices for the year.
       } else {
         tp = data["year"];
         shieldPeriod = "1 Year"; //assigning value to shieldPeriod variable, will be sent to other screens.
@@ -156,8 +184,8 @@ export default function ShieldSetup() {
       // console.log("tp:", tp[percent]);
 
       //setting default percenatge
-      if (percent === "0.00" || percent === 0 || percent === 0.15)  {
-        percent = (100 - marks2[marks2.length-1]["value"]).toFixed(2); //fetching the highest percent value
+      if (percent === "0.00" || percent === 0 || percent === 0.15) {
+        percent = (100 - marks2[marks2.length - 1]["value"]).toFixed(2); //fetching the highest percent value
         handleChange2(tp[percent]["shield_price"].toFixed(2)); //fetching the shield price for that percentage
         handleChange3(
           tp[percent]["percentage_portfolio_market_value"].toFixed(3) // fetching the percentage of portfolio for the value.
@@ -167,8 +195,8 @@ export default function ShieldSetup() {
         shieldP = tp[percent]["shield_price"].toFixed(2); //assisgning the shield price to export variable
         shieldPercentage = percent; //assigning the percentage to export variable.
       } else if (percent === "3.00" || percent === 3) {
-        handleChange2(0)
-        handleChange3(0)
+        handleChange2(0);
+        handleChange3(0);
       } else {
         handleChange2(tp[percent]["shield_price"].toFixed(2));
         handleChange3(
@@ -186,44 +214,38 @@ export default function ShieldSetup() {
   const slider_style = {
     paddingTop: 30,
     marginRight: 30,
+    height: 220,
+    width: "40px !important",
+    color: "#52af77",
   };
 
   const headings = {
     marginTop: -40,
-    fontSize: 30,
+    fontSize: 25,
     textAlign: "center",
-    color: "#16697a",
-    fontFamily: "Helvetica",
+    color: "#000000",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     background: "rgba(232, 236, 241, 0.3)",
   };
   const leftdiv = {
-    marginTop: 60,
-    height: 280,
-    textAlign: "left",
-    marginLeft: 100,
-    marginRight: 10,
     color: "#000000",
     fontSize: 25,
-    fontFamily: "Helvetica",
+    fontWeight: "bold",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   };
   const rightdiv = {
-    marginTop: -280,
-    height: 280,
-    textAlign: "right",
-    marginRight: 10,
-    marginLeft: 100,
     color: "#000000",
     fontSize: 25,
-    marginRight: 100,
-    position: "relative",
-    float: "right",
-    fontFamily: "Helvetica",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    fontWeight: "bold",
   };
   const radios = {
     marginTop: 30,
     color: "#000000",
     fontSize: 22,
-    marginLeft: 20,
+    marginLeft: 80,
+    textAlign: "left",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   };
 
   const slider = {
@@ -243,33 +265,35 @@ export default function ShieldSetup() {
     width: 300,
   };
   const cost = {
-    position: "relative",
-    margin: "auto",
     paddingTop: 90,
     textAlign: "center",
-    fontFamily: "Helvetica",
-    fontSize: 40,
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    fontSize: 30,
     fontWeight: "bold",
-    color: "#16697a",
-    width: 800,
+    color: "#000000",
   };
   const DIYcost = {
-    width: 800,
-    position: "relative",
-    margin: "auto",
     paddingTop: 20,
     textAlign: "center",
-    fontFamily: "Helvetica",
-    fontSize: 40,
-    fontWeight: "bold",
-    color: "#16697a",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    fontSize: 23,
+    fontWeight: "normal",
+    color: "#000000",
   };
   const loader = {
     position: "relative",
     margin: "auto",
     marginTop: 350,
-    width: 0,
+    width: 120,
   };
+
+  const tableDesign = {
+    width: 550,
+    position: "relative",
+    margin: "auto",
+    textAlign: "center",
+  };
+
   //rendering the loading screen if the API has not been resolved yet.
   if (flag == false) {
     getData();
@@ -281,7 +305,7 @@ export default function ShieldSetup() {
           color="#00BFFF"
           height={100}
           width={100}
-          timeout={12000} //3 secs
+          timeout={12000} //12 secs
         />
       </div>
     );
@@ -291,86 +315,103 @@ export default function ShieldSetup() {
       <div>
         <div>
           <div style={headings}>
-            <h1>Shield Setup</h1>
+            <h1>Adaptive Shield Setup</h1>
           </div>
-          <div style={leftdiv}>
-            <text>Protection Period:</text>
-            <div style={radios}>
-              <input
-                type="radio"
-                value="Day"
-                name="time"
-                checked={selected === "Day"}
-                onChange={handleChange}
-              />{" "}
-              Day<br></br>
-              <br></br>
-              <br></br>
-              <input
-                type="radio"
-                value="Week"
-                name="time"
-                checked={selected === "Week"}
-                onChange={handleChange}
-              />{" "}
-              Week<br></br>
-              <br></br>
-              <br></br>
-              <input
-                type="radio"
-                value="Month"
-                name="time"
-                checked={selected === "Month"}
-                onChange={handleChange}
-              />{" "}
-              Month<br></br>
-              <br></br>
-              <br></br>
-              <input
-                type="radio"
-                value="Year"
-                name="time"
-                checked={selected === "Year"}
-                onChange={handleChange}
-              />{" "}
-              Year<br></br>
-            </div>
-          </div>
-          <div style={rightdiv}>
-            <text>Protection Level:</text>
-            <div style={slider}>
-              <Typography id="vertical-slider" gutterBottom></Typography>
-              <div className={classes.root} style={slider_style}>
-                <Slider
-                  orientation="vertical"
-                  min={80}
-                  getAriaValueText={valuetext}
-                  defaultValue={99.85}
-                  aria-labelledby="vertical-slider"
-                  step={null}
-                  marks={marks2}
-                  valueLabelDisplay="on"
-                  // onChange={valuetext}
-                  // onChangeCommitted={valuetext}
-                />
-              </div>
-            </div>
-          </div>
-          <div style={cost}>
-            <table position="relative" margin="auto" width="800">
+          <div style={tableDesign}>
+            <table position="relative" margin="auto" width="600">
               <tr>
-                <td align="right">COST:</td>
-                <td align="left">
-                  ${quote} ({prcPort}%)
+                <td>
+                  <text style={leftdiv}>Protection Period:</text>
+                </td>
+                <td>
+                  <text style={leftdiv}>Protection Level:</text>
                 </td>
               </tr>
               <tr>
-                <td align="right">DIY COST:</td>
-                <td align="left">
-                  ${diy} ({diyPer}%)
+                <td>
+                  <div style={radios}>
+                    <input
+                      type="radio"
+                      value="Day"
+                      name="time"
+                      checked={selected === "Day"}
+                      onChange={handleChange}
+                    />{" "}
+                    Day<br></br>
+                    <br></br>
+                    <br></br>
+                    <input
+                      type="radio"
+                      value="Week"
+                      name="time"
+                      checked={selected === "Week"}
+                      onChange={handleChange}
+                    />{" "}
+                    Week<br></br>
+                    <br></br>
+                    <br></br>
+                    <input
+                      type="radio"
+                      value="Month"
+                      name="time"
+                      checked={selected === "Month"}
+                      onChange={handleChange}
+                    />{" "}
+                    Month<br></br>
+                    <br></br>
+                    <br></br>
+                    <input
+                      type="radio"
+                      value="Year"
+                      name="time"
+                      checked={selected === "Year"}
+                      onChange={handleChange}
+                    />{" "}
+                    Year<br></br>
+                  </div>
+                </td>
+                <td>
+                  <div
+                    className={classes.root}
+                    style={{ height: 240, paddingTop: 50, paddingLeft: 50 }}
+                  >
+                    <SliderF
+                      orientation="vertical"
+                      min={80}
+                      getAriaValueText={valuetext}
+                      defaultValue={99.85}
+                      aria-labelledby="vertical-slider"
+                      step={null}
+                      marks={marks2}
+                      valueLabelDisplay="auto"
+                      // onChange={valuetext}
+                      // onChangeCommitted={valuetext}
+                    />
+                  </div>
+                  <br></br>
+                  <text
+                    style={{
+                      fontFamily:
+                        "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                      marginLeft: -10
+                    }}
+                  >
+                    Chosen Level: {(100 - shieldPercentage).toFixed(2)}%
+                  </text>
                 </td>
               </tr>
             </table>
+          </div>
+
+          <div style={cost}>
+            <text>
+              Shield Quote: ${quote} / {selected} ({prcPort}%)
+            </text>
+          </div>
+          <div style={DIYcost}>
+            <text>
+              Estimated DIY Cost: ${diy} / {selected} ({diyPer}%)
+            </text>
           </div>
           <div style={confirmButton}>
             <Button

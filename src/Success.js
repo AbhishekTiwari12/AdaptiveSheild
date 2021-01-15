@@ -2,21 +2,26 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { sendPrice } from "./ShieldSetup";
+import { ChangeShieldState } from "./Accountsummary";
 
 export default function Success() {
   const history = useHistory();
-  const price = sendPrice()
-  const handleClickBack = () => history.push("/");
+  const price = sendPrice();
+  const handleClickBack = () => {
+    ChangeShieldState();
+    history.push("/");
+  };
 
   const headings = {
     marginTop: 70,
     position: "relative",
     margin: "auto",
-    fontSize: 40,
+    fontSize: 50,
     textAlign: "center",
-    color: "#16697a",
-    fontFamily: "Helvetica",
+    color: "#000000",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     background: "rgba(232, 236, 241, 0.5)",
+    fontWeight: "bold",
   };
 
   const backButton = {
@@ -28,42 +33,76 @@ export default function Success() {
   const TC = {
     textAlign: "center",
     fontSize: 40,
-    fontFamily: "Helvetica",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     paddingTop: 30,
-    color: "#ffa62b",
+    color: "#000000",
+  };
+  const shieldData = {
+    position: "relative",
+    margin: "auto",
+    textAlign: "left",
+    paddingTop: 20,
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    paddingLeft: 50,
+    maxWidth: 600,
+    fontSize: 18,
   };
   const TCcontent = {
     position: "relative",
     margin: "auto",
-    textAlign: "justify",
+    textAlign: "center",
     paddingTop: 20,
-    fontFamily: "Helvetica",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     paddingLeft: 20,
     paddingRight: 20,
     maxWidth: 600,
-    fontSize: 20,
+    fontSize: 16,
   };
+
+  const Notice = {
+    textAlign: "center",
+    paddingTop: 30,
+    fontSize: 20,
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+  }
 
   return (
     <React.Fragment>
       <div style={headings}>
-        <text>SHIELD CONFIRMED!</text>
+        <text>Adaptive Shield Confirmed!</text>
       </div>
       <div style={TC}>
         <text>TERMS & CONDITIONS</text>
       </div>
+      <div style = {Notice}>
+        <text>
+          You are agreeing to purchase protection with the following details:
+        </text>
+      </div>
+      <div style={shieldData}>
+        <br></br>
+        <table>
+          <tr>
+            <td>Portfolio value protected:</td>
+            <td>{price[3]}%</td>
+          </tr>
+          <tr>
+            <td>And for a loss no less than:</td>
+            <td>{price[2]}%</td>
+          </tr>
+          <tr>
+            <td>For a period of:</td>
+            <td>{price[1]}</td>
+          </tr>
+          <tr>
+            <td>For a total cost of:</td>
+            <td>${price[0]}</td>
+          </tr>
+        </table>
+      </div>
+      <br></br>
       <div style={TCcontent}>
         <text>
-          You are agreeing to purchase protection on the portfolio above:
-          <br></br>
-          <br></br>
-          Portfolio value protected: {price[3]}%<br></br>
-          And for a loss no less than: {price[2]}%<br></br>
-          For a period of: {price[1]}
-          <br></br>
-          For a total cost of: ${price[0]}
-          <br></br>
-          <br></br>
           Shield Protection Period expires on the selected date. Shield
           Protection Level specifies the level of selected protection. Shield
           Protection Payout is settled at closing on the expiration date of the
