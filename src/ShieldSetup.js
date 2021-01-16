@@ -220,8 +220,8 @@ export default function ShieldSetup() {
   };
 
   const headings = {
-    marginTop: -30,
-    fontSize: 20,
+    marginTop: -20,
+    fontSize: 15,
     textAlign: "center",
     color: "#000000",
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
@@ -229,13 +229,14 @@ export default function ShieldSetup() {
   };
   const leftdiv = {
     color: "#000000",
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    textAlign: "center",
   };
   const rightdiv = {
     color: "#000000",
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     fontWeight: "bold",
   };
@@ -296,12 +297,12 @@ export default function ShieldSetup() {
 
   const percentageStyles = {
     paddingTop: 30,
-    paddingLeft: 20,
+    paddingLeft: 0,
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
   };
   const percentageStylesBottom = {
     paddingTop: 10,
-    paddingLeft: 20,
+    paddingLeft: 0,
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
   };
 
@@ -329,8 +330,8 @@ export default function ShieldSetup() {
             <h1>Adaptive Shield Setup</h1>
           </div>
           <div style={tableDesign}>
-            <table position="relative" margin="auto" maxwidth="600">
-              <tr>
+            <table position="relative" margin="auto" width="600">
+              <tr align="center">
                 <td>
                   <text style={leftdiv}>Protection Period:</text>
                 </td>

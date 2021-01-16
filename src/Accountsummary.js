@@ -57,8 +57,8 @@ export default function Accountsummary() {
 
   //CSS for the elements on the page, will have no errors here, ignore in case of debugging.
   const headings = {
-    marginTop: -30,
-    fontSize: 25,
+    marginTop: -20,
+    fontSize: 15,
     textAlign: "center",
     color: "#000000",
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
