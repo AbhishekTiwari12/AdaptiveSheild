@@ -75,8 +75,9 @@
   }
   
   #chck:checked + .toggle {
-    background-color: #ffffff;
+    background-color: #000000;
     background-image: linear-gradient(315deg, #ffffff 0%, #82bc23 74%);
+
   }
   
   #chck:checked + .toggle::after {

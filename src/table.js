@@ -83,15 +83,15 @@ export default function AcccessibleTable() {
   return (
     <Paper className={classes.root}>
             <Table className={classes.table} aria-label="caption table">
-              <caption>Stock Prices</caption>
+              
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Symbol</TableCell>
-                  <TableCell align="left">Quantity</TableCell>
-                  <TableCell align="left">Last</TableCell>
-                  <TableCell align="left">Previous Close</TableCell>
-                  <TableCell align="left">Change%</TableCell>
-                  <TableCell align="left">Market Value</TableCell>
+                  <TableCell align="right">Quantity</TableCell>
+                  <TableCell align="right">Last</TableCell>
+                  <TableCell align="right">Previous Close</TableCell>
+                  <TableCell align="right">Change%</TableCell>
+                  <TableCell align="right">Market Value</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -100,15 +100,15 @@ export default function AcccessibleTable() {
                     <TableCell align="left" component="th" scope="row">
                       {row.Symbol}
                     </TableCell>
-                    <TableCell align="left">{row.Quantity}</TableCell>
-                    <TableCell align="left">
+                    <TableCell align="right">{row.Quantity}</TableCell>
+                    <TableCell align="right">
                       ${row.Last.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell align="right">
                       ${row.Previous.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </TableCell>
-                    <TableCell align="left">{row.Change}%</TableCell>
-                    <TableCell align="left">
+                    <TableCell align="right">{row.Change}%</TableCell>
+                    <TableCell align="right">
                       ${row.Value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </TableCell>
                   </TableRow>

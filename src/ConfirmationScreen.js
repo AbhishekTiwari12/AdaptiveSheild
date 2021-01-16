@@ -11,7 +11,7 @@ export default function ConfirmationScreen() {
   const handleClickBack = () => history.push("/ShieldSetup");
   const headings = {
     marginTop: -5,
-    fontSize: 50,
+    fontSize: 30,
     textAlign: "center",
     color: "#000000",
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
@@ -20,7 +20,7 @@ export default function ConfirmationScreen() {
   };
   const TC = {
     textAlign: "center",
-    fontSize: 40,
+    fontSize: 30,
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     paddingTop: 30,
   };
@@ -37,13 +37,13 @@ export default function ConfirmationScreen() {
   const TCcontent = {
     position: "relative",
     margin: "auto",
-    textAlign: "center",
+    textAlign: "left",
     paddingTop: 20,
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     paddingLeft: 20,
     paddingRight: 20,
     maxWidth: 600,
-    fontSize: 16,
+    fontSize: 12,
   };
 
   const Notice = {
@@ -88,22 +88,22 @@ export default function ConfirmationScreen() {
       </div>
       <div style={shieldData}>
         <br></br>
-        <table>
+        <table width="500" position="relative" margin="auto">
           <tr>
             <td>Portfolio value protected:</td>
-            <td>{price[3]}%</td>
+            <td align="right">{price[3]}%</td>
           </tr>
           <tr>
             <td>And for a loss no less than:</td>
-            <td>{price[2]}%</td>
+            <td align="right">{price[2]}%</td>
           </tr>
           <tr>
             <td>For a period of:</td>
-            <td>{price[1]}</td>
+            <td align="right">{price[1]}</td>
           </tr>
           <tr>
             <td>For a total cost of:</td>
-            <td>${price[0]}</td>
+            <td align="right">${price[0]}</td>
           </tr>
         </table>
       </div>
@@ -128,7 +128,7 @@ export default function ConfirmationScreen() {
       <div style={confirmButton}>
         <Button
           variant="contained"
-          color="primary"
+          color=""
           fullWidth={true}
           onClick={handleClickConfirm}
         >

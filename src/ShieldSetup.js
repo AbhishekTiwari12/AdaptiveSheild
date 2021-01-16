@@ -220,8 +220,8 @@ export default function ShieldSetup() {
   };
 
   const headings = {
-    marginTop: -40,
-    fontSize: 25,
+    marginTop: -30,
+    fontSize: 20,
     textAlign: "center",
     color: "#000000",
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
@@ -294,6 +294,17 @@ export default function ShieldSetup() {
     textAlign: "center",
   };
 
+  const percentageStyles = {
+    paddingTop: 30,
+    paddingLeft: 20,
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+  };
+  const percentageStylesBottom = {
+    paddingTop: 10,
+    paddingLeft: 20,
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+  };
+
   //rendering the loading screen if the API has not been resolved yet.
   if (flag == false) {
     getData();
@@ -318,7 +329,7 @@ export default function ShieldSetup() {
             <h1>Adaptive Shield Setup</h1>
           </div>
           <div style={tableDesign}>
-            <table position="relative" margin="auto" width="600">
+            <table position="relative" margin="auto" maxwidth="600">
               <tr>
                 <td>
                   <text style={leftdiv}>Protection Period:</text>
@@ -371,9 +382,12 @@ export default function ShieldSetup() {
                   </div>
                 </td>
                 <td>
+                  <div style={percentageStyles}>
+                    <text>100%</text>
+                  </div>
                   <div
                     className={classes.root}
-                    style={{ height: 240, paddingTop: 50, paddingLeft: 50 }}
+                    style={{ height: 240, paddingTop: 20, paddingLeft: 50 }}
                   >
                     <SliderF
                       orientation="vertical"
@@ -388,12 +402,15 @@ export default function ShieldSetup() {
                       // onChangeCommitted={valuetext}
                     />
                   </div>
+                  <div style={percentageStylesBottom}>
+                    <text>80%</text>
+                  </div>
                   <br></br>
                   <text
                     style={{
                       fontFamily:
                         "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-                      marginLeft: -10
+                      marginLeft: -10,
                     }}
                   >
                     Chosen Level: {(100 - shieldPercentage).toFixed(2)}%
@@ -416,7 +433,7 @@ export default function ShieldSetup() {
           <div style={confirmButton}>
             <Button
               variant="contained"
-              color="primary"
+              color="default"
               fullWidth="True"
               onClick={handleClickConfirm}
             >

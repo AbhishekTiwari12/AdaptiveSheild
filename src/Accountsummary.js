@@ -336,13 +336,13 @@ export default function Accountsummary() {
             </Table>
           </Paper>
           <div style={addStockButton}>
-            <Button variant="outlined" color="primary" onClick={handleClick4}>
+            <Button variant="outlined" color="default" onClick={handleClick4}>
               UPDATE STOCKS
             </Button>
-            <Button variant="outlined" color="secondary" onClick={handleClick3}>
+            <Button variant="outlined" color="default" onClick={handleClick3}>
               DELETE STOCKS
             </Button>
-            <Button variant="outlined" color="primary" onClick={handleClick2}>
+            <Button variant="outlined" color="default" onClick={handleClick2}>
               ADD STOCKS +
             </Button>
           </div>
