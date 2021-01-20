@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import AcccessibleTable from "./table";
 import { sendPrice } from "./ShieldSetup";
 
+//render confirmation screen
 export default function ConfirmationScreen() {
   const price = sendPrice();
   const history = useHistory();
